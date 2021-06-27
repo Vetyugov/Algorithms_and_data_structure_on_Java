@@ -5,30 +5,41 @@ import java.util.NoSuchElementException;
 
 public class MyArrayList<E extends Comparable<E>> {
     private E[] list;
+    private E[] listTemp;
     private int size;
 
     private final int DEFAULT_CAPACITY = 10;
+    private int capacity;
 
+    //не используется
     public MyArrayList(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity: " + capacity);
         }
         list = (E[]) new Comparable[capacity];
+
     }
 
     public MyArrayList() {
         list = (E[]) new Comparable[DEFAULT_CAPACITY];
+        this.capacity = DEFAULT_CAPACITY;
     }
 
     public void add(E item) {
-        //  проверить переполнение и при необходимости увеличиваем массив на size/2 +1
+        // (DONE) проверить переполнение и при необходимости увеличиваем массив на size/2 +1
+        checkOver();
         list[size] = item;
         size++;
     }
 
     public void add(int index, E item) {
-        // проверить корректность index  [0..size]
-        //  проверить переполнение и при необходимости увеличиваем массив на size/2 +1
+        // (DONE) проверить корректность index  [0..size]
+        if (index > size || index < 0){
+            throw new ArrayIndexOutOfBoundsException("Индекс за границами массива");
+        }
+        // (DONE) проверить переполнение и при необходимости увеличиваем массив на size/2 +1
+        checkOver();
+
         for (int i = size; i > index; i--) {
             list[i] = list[i - 1];
         }
@@ -40,7 +51,11 @@ public class MyArrayList<E extends Comparable<E>> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        // проверить корректность index  [0..size)
+        // (DONE) проверить корректность index  [0..size)
+        if (index >= size || index < 0){
+            throw new ArrayIndexOutOfBoundsException("Индекс за границами массива");
+        }
+
         for (int i = index; i <= size; i++) {
             list[i] = list[i + 1];
         }
@@ -58,7 +73,11 @@ public class MyArrayList<E extends Comparable<E>> {
     }
 
     public E get(int index) {
-        // проверить корректность index  [0..size)
+        // (DONE) проверить корректность index  [0..size)
+        if (index >= size || index < 0){
+            throw new ArrayIndexOutOfBoundsException("Индекс за границами массива");
+        }
+
         return list[index];
     }
 
@@ -104,6 +123,18 @@ public class MyArrayList<E extends Comparable<E>> {
         E temp = list[index1];
         list[index1] = list[index2];
         list[index2] = temp;
+    }
+
+    private void checkOver(){
+        if (size >= capacity){
+            capacity += capacity/2 + 1;
+            listTemp = (E[]) new Comparable[capacity];
+            for (int i = 0; i < size; i++) {
+                listTemp[i] = list[i];
+            }
+            list = listTemp;
+            listTemp = null;
+        }
     }
 
     public void selectionSort() {

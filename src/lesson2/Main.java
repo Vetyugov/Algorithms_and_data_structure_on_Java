@@ -41,19 +41,46 @@ public class Main {
 //        System.out.println(msal.binaryFind(9));
 
 
+        //Создаём массив из random элементов размером 100_000;
         Random random = new Random();
         MyArrayList<Integer> mal = new MyArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10_000; i++) {
             mal.add(random.nextInt(20));
         }
 
-        System.out.println(mal);
+        //Засекаем время выполнения сортировки пузырьком
+        long currentTime = System.currentTimeMillis();
+        mal.bubbleSort();
+        System.out.println("Сортировка пузырьком прошла за время = " + (System.currentTimeMillis() - currentTime));
+
+        //Создаём новый массив из random элементов размером 100_000;
+        mal = new MyArrayList<>();
+        for (int i = 0; i < 10_000; i++) {
+            mal.add(random.nextInt(20));
+        }
+
+        //Засекаем время выполнения сортировки методом вставками
+        currentTime = System.currentTimeMillis();
+        mal.insertionSort();
+        System.out.println("Сортировка методом вставки прошла за время = " + (System.currentTimeMillis() - currentTime));
+
+        //Создаём новый массив из random элементов размером 100_000;
+        mal = new MyArrayList<>();
+        for (int i = 0; i < 10_000; i++) {
+            mal.add(random.nextInt(20));
+        }
+
+        //Засекаем время выполнения сортировки методом выбора
+        currentTime = System.currentTimeMillis();
+        mal.selectionSort();
+        System.out.println("Сортировка методом выбора прошла за время = " + (System.currentTimeMillis() - currentTime));
+
 
 //        mal.selectionSort();
 //        mal.insertionSort();
-        mal.bubbleSort();
+//        mal.bubbleSort();
 
-        System.out.println(mal);
+//        System.out.println(mal);
 
     }
 }
