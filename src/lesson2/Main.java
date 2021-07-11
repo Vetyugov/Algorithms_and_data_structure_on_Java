@@ -76,6 +76,8 @@ public class Main {
         System.out.println("Сортировка методом выбора прошла за время = " + (System.currentTimeMillis() - currentTime));
 
 
+        mal.qSort();//64 ms
+
 //        mal.selectionSort();
 //        mal.insertionSort();
 //        mal.bubbleSort();

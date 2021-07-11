@@ -173,4 +173,42 @@ public class MyArrayList<E extends Comparable<E>> {
         }
     }
 
+
+    public void qSort() {
+        quickSort(0, size - 1);
+    }
+
+    private void quickSort(int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+
+        int mid = lo + (hi - lo) / 2;
+        E opora = list[mid];
+
+        int i = lo;
+        int j = hi;
+        while (i <= j) {
+            while (less(list[i], opora)) {
+                i++;
+            }
+            while (less(opora, list[j])) {
+                j--;
+            }
+
+            if (i <= j) {
+                swap(i, j);
+                i++;
+                j--;
+            }
+        }
+
+        if (lo < j) {
+            quickSort(lo, j);
+        }
+        if (hi > i) {
+            quickSort(i, hi);
+        }
+    }
+
 }
